@@ -1,0 +1,2 @@
+alert_percentile: 99.0
+min_alert_gap_seconds: 10

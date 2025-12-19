@@ -1,0 +1,25 @@
+window_seconds: 5
+
+# "en0" on Mac, "eth0" on Linux. null = auto in scripts.
+capture:
+  interface: null
+
+features:
+  enabled:
+    - entropy_src_ip
+    - entropy_dst_port
+    - pkt_rate
+    - byte_rate
+    - iat_mean_ms
+    - iat_std_ms
+    - tcp_ratio
+    - udp_ratio
+    - icmp_ratio
+
+ml:
+  enabled: true
+  contamination: 0.01
+  weight: 0.4
+
+scoring:
+  stats_weight: 0.6
