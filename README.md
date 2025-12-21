@@ -1,4 +1,4 @@
-# Aegis: Hybrid Anomaly-Based Intrusion Detection System
+# Aegis
 
 ## Overview
 Aegis is a lightweight, hybrid anomaly-based Intrusion Detection System (IDS) designed to detect unusual network traffic patterns. It combines **statistical baselines** and an **Isolation Forest machine learning model** to identify anomalies, including zero-day-style attacks, without relying on signature-based detection.
