@@ -1,6 +1,5 @@
 window_seconds: 5
 
-# "en0" on Mac, "eth0" on Linux. null = auto in scripts.
 capture:
   interface: null
 
@@ -19,7 +18,7 @@ features:
 ml:
   enabled: true
   contamination: 0.01
-  weight: 0.4
+  weight: 1.0
 
 scoring:
-  stats_weight: 0.6
+  stats_weight: 0.0
