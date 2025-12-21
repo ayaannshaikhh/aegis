@@ -32,29 +32,30 @@ def main() -> None:
         if p.exists():
             if_model = load_if_model(p)
 
-    packets = read_pcap(Path(args.pcap))
     scores = []
     windows = []
 
-    if packets:
-        cur_start = float(packets[0].time)
-        cur = []
-        for pkt in packets:
-            t = float(pkt.time)
-            if t - cur_start < window:
-                cur.append(pkt)
-            else:
-                wf = extract_window_features(cur, cur_start, cur_start + window)
-                s = final_score(wf.features, baseline, if_model, stats_w, ml_w)
-                scores.append(s["final"])
-                windows.append((wf, s))
-                cur_start = t
-                cur = [pkt]
-        if cur:
+    packets = read_pcap(Path(args.pcap))
+    packets_iter = iter(packets)
+    try:
+        first_pkt = next(packets_iter)
+    except StopIteration:
+        print("No packets found in PCAP!")
+        return
+
+    cur_start = float(first_pkt.time)
+    cur = [first_pkt]
+
+    for pkt in packets_iter:
+        t = float(pkt.time)
+        if t - cur_start < window:
+            cur.append(pkt)
+        else:
             wf = extract_window_features(cur, cur_start, cur_start + window)
             s = final_score(wf.features, baseline, if_model, stats_w, ml_w)
             scores.append(s["final"])
             windows.append((wf, s))
+
 
     threshold = compute_threshold(scores, float(thr_cfg["alert_percentile"]))
 
